@@ -1,7 +1,6 @@
 node_modules/
 .shots/
 .vercel/
-src/v2/          # superseded handoff files
+src/v2/
 *.log
 .DS_Store
-.vercel
