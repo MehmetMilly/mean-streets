@@ -1,0 +1,32 @@
+<div class="app">
+  <main id="mapv">
+    <div class="top">
+      <span class="brand" id="brand">MEAN STREETS</span>
+      <div class="hudpills"><span class="pill"><span class="g">★</span><span id="starsT">0</span></span><span class="pill"><span id="xpT">0</span><span class="g">XP</span></span><button class="iconbtn snd" aria-label="Sound on">♪</button></div>
+    </div>
+    <section class="hero">
+      <span class="eyebrow">Stat 1050 · Lectures 4 + 5</span>
+      <h1>Find the center.<br><span class="gold">Measure the spread.</span></h1>
+      <p>Nine short levels. One card at a time. Answers stay locked until you try.</p>
+      <div class="meter"><div class="meter-row"><span>Campaign</span><b id="campPct">0%</b></div><div class="track"><i id="campBar"></i></div></div>
+    </section>
+    <div class="map" id="map"></div>
+    <div class="side">
+      <div class="panel"><h3>Secrets <span class="muted mono" id="eggC" style="font-size:.85rem">0/5</span></h3><div class="ach" id="ach"></div><p class="muted" style="font-size:.88rem">Five things are hidden in this game. No hints. Okay, one: the logo is tappable.</p></div>
+      <div class="panel"><h3>Report for Claude</h3><p class="muted" style="font-size:.9rem">Every wrong first try, hint and skip gets logged here. Copy it and paste it to me.</p><textarea id="rep" readonly aria-label="Report"></textarea><div class="prow"><button class="btn sm" id="copy">Copy report</button><button class="btn ghost sm" id="unlock">Unlock all levels</button><button class="btn ghost sm" id="reset">Reset</button></div></div>
+    </div>
+  </main>
+
+  <main id="stagev" class="stage" hidden>
+    <header class="sbar">
+      <div class="sbar-row"><button class="iconbtn" id="tomap" aria-label="Back to map">←</button><div class="ttl"><small id="sLvl">Level</small><b id="sName">—</b></div><span class="pill"><span id="xpS">0</span><span class="g">XP</span></span><button class="iconbtn snd" aria-label="Sound on">♪</button></div>
+      <div class="segs" id="segs"></div>
+    </header>
+    <div id="cardhost"></div>
+  </main>
+</div>
+
+<div class="abar" id="abar" hidden><div class="abar-in"><button class="btn sec" id="prev" aria-label="Previous card">←</button><button class="btn main" id="next">Continue</button><button class="skip" id="skip" hidden>skip</button></div></div>
+<div class="fin" id="fin" hidden></div>
+<div class="toast" id="toast"></div>
+<canvas id="fx" aria-hidden="true"></canvas>

@@ -1,0 +1,12 @@
+{
+  "name": "Mean Streets",
+  "short_name": "Mean Streets",
+  "description": "STAT 1050 — mean, median, mode, grouped tables, variance, SD and CV, as a game.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0C0E",
+  "theme_color": "#0B0C0E",
+  "icons": [
+    { "src": "/assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
