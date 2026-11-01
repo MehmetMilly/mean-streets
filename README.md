@@ -2,7 +2,7 @@
 
 STAT 1050 (Lectures 4 + 5) as a game. Mean/median/mode, grouped tables, range/variance/SD, and CV — nine levels, one card at a time.
 
-Live: https://mean-streets.vercel.app
+Live: https://mean-streets-stat1050.vercel.app
 
 ## Shape
 
