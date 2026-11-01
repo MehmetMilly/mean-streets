@@ -29,17 +29,17 @@ function setMute(m){muted=m;store.set('muted',m);$$('.snd').forEach(b=>{b.textCo
 setMute(muted);$$('.snd').forEach(b=>b.onclick=()=>{setMute(!muted);if(!muted)sfx.coin()});
 
 /* ---------- theme ---------- */
-// follows the OS until you pick one, then remembers your pick
+// dark is the default look; the OS preference only decides if the user hasn't chosen
 const sysDark=matchMedia('(prefers-color-scheme: dark)');
-function applyTheme(t){if(t==='light'||t==='dark')rootEl.setAttribute('data-theme',t);else rootEl.removeAttribute('data-theme');
- const dark=t==='dark'||(t!=='light'&&sysDark.matches);
+function applyTheme(t){if(t==='light'||t==='dark')rootEl.setAttribute('data-theme',t);else rootEl.setAttribute('data-theme','dark');
+ const dark=t!=='light';
  $$('.thm').forEach(b=>{b.textContent=dark?'◐':'◑';b.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme')});
  const meta=document.querySelector('meta[name=theme-color]');if(meta)meta.setAttribute('content',dark?'#0B0C0E':'#F3F4F2')}
 let themePref=store.get('theme',null);
 applyTheme(themePref);
-sysDark.addEventListener('change',()=>{if(!store.get('theme',null))applyTheme(null)});
-$$('.thm').forEach(b=>b.onclick=()=>{const dark=rootEl.getAttribute('data-theme')==='dark'||(!rootEl.getAttribute('data-theme')&&sysDark.matches);
- themePref=dark?'light':'dark';store.set('theme',themePref);applyTheme(themePref);sfx.tap();renderMap()});
+$$('.thm').forEach(b=>b.onclick=()=>{const dark=rootEl.getAttribute('data-theme')!=='light';
+ themePref=dark?'light':'dark';store.set('theme',themePref);applyTheme(themePref);sfx.tap();
+ if(!$('#mapv').hidden)renderMap()});
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn,.opt');if(!b||b.disabled||RM)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height),sp=document.createElement('span');sp.className='rip';sp.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;b.appendChild(sp);setTimeout(()=>sp.remove(),650)});
 
 /* ---------- particles ---------- */
