@@ -1,4 +1,5 @@
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const rootEl=document.documentElement;
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store={get(k,d){try{const v=localStorage.getItem('ms2:'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('ms2:'+k,JSON.stringify(v))}catch(e){}}};
 const fmt=(v,d=2)=>(Math.round(v*10**d)/10**d).toLocaleString('en-US',{maximumFractionDigits:d});
@@ -26,6 +27,19 @@ const sfx={
 };
 function setMute(m){muted=m;store.set('muted',m);$$('.snd').forEach(b=>{b.textContent=m?'×':'♪';b.setAttribute('aria-label',m?'Sound off':'Sound on')})}
 setMute(muted);$$('.snd').forEach(b=>b.onclick=()=>{setMute(!muted);if(!muted)sfx.coin()});
+
+/* ---------- theme ---------- */
+// follows the OS until you pick one, then remembers your pick
+const sysDark=matchMedia('(prefers-color-scheme: dark)');
+function applyTheme(t){if(t==='light'||t==='dark')rootEl.setAttribute('data-theme',t);else rootEl.removeAttribute('data-theme');
+ const dark=t==='dark'||(t!=='light'&&sysDark.matches);
+ $$('.thm').forEach(b=>{b.textContent=dark?'◐':'◑';b.setAttribute('aria-label',dark?'Switch to light theme':'Switch to dark theme')});
+ const meta=document.querySelector('meta[name=theme-color]');if(meta)meta.setAttribute('content',dark?'#0B0C0E':'#F3F4F2')}
+let themePref=store.get('theme',null);
+applyTheme(themePref);
+sysDark.addEventListener('change',()=>{if(!store.get('theme',null))applyTheme(null)});
+$$('.thm').forEach(b=>b.onclick=()=>{const dark=rootEl.getAttribute('data-theme')==='dark'||(!rootEl.getAttribute('data-theme')&&sysDark.matches);
+ themePref=dark?'light':'dark';store.set('theme',themePref);applyTheme(themePref);sfx.tap();renderMap()});
 document.addEventListener('pointerdown',e=>{const b=e.target.closest('.btn,.opt');if(!b||b.disabled||RM)return;const r=b.getBoundingClientRect(),s=Math.max(r.width,r.height),sp=document.createElement('span');sp.className='rip';sp.style.cssText=`width:${s}px;height:${s}px;left:${e.clientX-r.left-s/2}px;top:${e.clientY-r.top-s/2}px`;b.appendChild(sp);setTimeout(()=>sp.remove(),650)});
 
 /* ---------- particles ---------- */
@@ -177,7 +191,6 @@ const ARTS={
 };
 const ARTSVG=id=>`<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ARTS[id]||''}</svg>`;
 const LOCK='<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="13" y="28" width="38" height="28" rx="8"/><path d="M21 28v-7a11 11 0 0 1 22 0v7"/><circle cx="32" cy="42" r="3" fill="currentColor"/></svg>';
-const rootEl=document.documentElement;
 function setWorld(id){rootEl.style.setProperty('--wh',id?WORLD[id]:'#FFB224')}
 L.forEach(l=>l.steps.unshift({t:'cover'}));
 function coverCard(card,lv){const n=lv.steps.length-1,lab=lv.boss?'Boss level':/\d/.test(lv.n)?'Level '+String(lv.n).padStart(2,'0'):'Bonus level';
