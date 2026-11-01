@@ -1,6 +1,5 @@
 node_modules/
 .shots/
 .vercel/
-src/v2/
 *.log
 .DS_Store
